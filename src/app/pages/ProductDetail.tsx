@@ -15,7 +15,7 @@ interface ItemReview {
 
 const SEED_REVIEWS: Record<string, ItemReview[]> = {
   'kacchi-biryani': [
-    { id: 'r1', name: 'Rahim Uddin', rating: 5, comment: 'Absolutely heavenly! The mutton was so tender and the saffron aroma was intoxicating. Best biryani in Barishal, no doubt.', date: '2025-03-18', helpful: 24 },
+    { id: 'r1', name: 'Rahim Uddin', rating: 5, comment: 'Absolutely heavenly! The mutton was so tender and the saffron aroma was intoxicating. Best biryani in Dhaka, no doubt.', date: '2025-03-18', helpful: 24 },
     { id: 'r2', name: 'Fatema Begum', rating: 5, comment: 'Ordered three times this month! The slow-cooked flavor is unmatched. Highly recommended for family gatherings.', date: '2025-03-10', helpful: 18 },
     { id: 'r3', name: 'Karim Hossain', rating: 4, comment: 'Very good biryani. A little more gravy would be perfect. But the spice balance is excellent.', date: '2025-02-28', helpful: 9 },
   ],
@@ -183,7 +183,7 @@ export function ProductDetail() {
       <SEO 
         title={item.name}
         description={item.description}
-        keywords={`${item.name}, ${item.category}, Rizqara Restaurant, Best ${item.name} in Barishal`}
+        keywords={`${item.name}, ${item.category}, Rizqara Restaurant, Best ${item.name} in Dhaka`}
         image={item.image}
       />
       {/* Breadcrumb */}

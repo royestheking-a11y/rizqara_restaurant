@@ -41,9 +41,9 @@ export function Contact() {
   return (
     <div style={{ paddingTop: '80px', minHeight: '100vh' }}>
       <SEO 
-        title="Contact Us - Visit Us in Barishal"
-        description="Find our location in Barishal, check our opening hours, or send us a message. We are here to assist with your reservations and catering needs."
-        keywords="Contact Rizqara, Restaurant Location Barishal, Opening Hours, Reservation Help, Customer Support"
+        title="Contact Us - Visit Us in Dhaka"
+        description="Find our location in Dhaka, check our opening hours, or send us a message. We are here to assist with your reservations and catering needs."
+        keywords="Contact Rizqara, Restaurant Location Dhaka, Opening Hours, Reservation Help, Customer Support"
       />
       {/* Header */}
       <div className="py-20 px-4 text-center relative overflow-hidden" style={{ background: 'linear-gradient(135deg, #6B0F0F, #4A0A0A)' }}>
@@ -68,7 +68,7 @@ export function Contact() {
             { icon: Phone, label: 'Phone', value: '+880 1800-000000', sub: 'Mon–Sat, 10AM–10PM', href: 'tel:+8801800000000', color: '#6B0F0F' },
             { icon: MessageCircle, label: 'WhatsApp', value: '+880 1900-000000', sub: 'Quick Response', href: 'https://wa.me/8801900000000', color: '#25D366' },
             { icon: Mail, label: 'Email', value: 'info@rizqara.com', sub: 'Reply within 24h', href: 'mailto:info@rizqara.com', color: '#2563EB' },
-            { icon: MapPin, label: 'Address', value: 'M9W9+R6, Barishal', sub: 'Bangladesh', href: '#map', color: '#7C3AED' },
+            { icon: MapPin, label: 'Address', value: 'M9W9+R6, Dhaka', sub: 'Bangladesh', href: '#map', color: '#7C3AED' },
           ].map(({ icon: Icon, label, value, sub, href, color }) => (
             <a
               key={label}
@@ -214,7 +214,7 @@ export function Contact() {
       <section id="map" className="px-4 sm:px-6 lg:px-8 pb-14">
         <div className="max-w-6xl mx-auto rounded-3xl overflow-hidden shadow-xl" style={{ height: '400px' }}>
           <iframe
-            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3687.0!2d90.3637!3d22.7010!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3754b2f2e11d2b7b%3A0x0!2sM9W9%2BR6%2C+Barishal%2C+Bangladesh!5e0!3m2!1sen!2sbd!4v1680000000000!5m2!1sen!2sbd"
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3687.0!2d90.3637!3d22.7010!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3754b2f2e11d2b7b%3A0x0!2sM9W9%2BR6%2C+Dhaka%2C+Bangladesh!5e0!3m2!1sen!2sbd!4v1680000000000!5m2!1sen!2sbd"
             width="100%"
             height="100%"
             style={{ border: 0 }}

@@ -68,8 +68,8 @@ export function Menu() {
     <div style={{ paddingTop: '80px', minHeight: '100vh' }}>
       <SEO 
         title="Our Menu - Asian & Fusion Cuisine"
-        description="Explore the Rizqara Restaurant menu. From traditional Kacchi Biryani to premium BBQ platters and authentic Chinese dishes, discover the best flavors in Barishal."
-        keywords="Rizqara Menu, Biryani Barishal, BBQ Barishal, Chinese Food Barishal, Best Restaurant Menu"
+        description="Explore the Rizqara Restaurant menu. From traditional Kacchi Biryani to premium BBQ platters and authentic Chinese dishes, discover the best flavors in Dhaka."
+        keywords="Rizqara Menu, Biryani Dhaka, BBQ Dhaka, Chinese Food Dhaka, Best Restaurant Menu"
       />
       {/* Page Header */}
       <div

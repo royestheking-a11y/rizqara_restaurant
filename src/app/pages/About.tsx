@@ -5,10 +5,10 @@ import { SEO } from '../components/SEO';
 
 export function About() {
   const milestones = [
-    { year: '2024', title: 'Grand Opening', desc: 'Rizqara Restaurant opened its doors in Barishal with a vision for premium dining.' },
-    { year: '2024', title: 'First Award', desc: 'Won "Best New Restaurant in Barishal" at the Regional Food Excellence Awards.' },
+    { year: '2024', title: 'Grand Opening', desc: 'Rizqara Restaurant opened its doors in Dhaka with a vision for premium dining.' },
+    { year: '2024', title: 'First Award', desc: 'Won "Best New Restaurant in Dhaka" at the Regional Food Excellence Awards.' },
     { year: '2025', title: 'Innovation', desc: 'Launched our state-of-the-art kitchen and added a dedicated catering wing.' },
-    { year: '2026', title: '#1 Status', desc: 'Recognized as the #1 premium dining destination in Barishal by 10,000+ customer reviews.' },
+    { year: '2026', title: '#1 Status', desc: 'Recognized as the #1 premium dining destination in Dhaka by 10,000+ customer reviews.' },
   ];
 
   const values = [
@@ -22,8 +22,8 @@ export function About() {
     <div style={{ paddingTop: '80px', minHeight: '100vh' }}>
       <SEO 
         title="Our Story & Culinary Heritage"
-        description="Learn about the history of Rizqara Restaurant, our mission for culinary excellence in Barishal, and the expert team led by Chef Hurika."
-        keywords="About Rizqara, Restaurant History, Chef Hurika, Best Chefs Barishal, Premium Dining Mission"
+        description="Learn about the history of Rizqara Restaurant, our mission for culinary excellence in Dhaka, and the expert team led by Chef Hurika."
+        keywords="About Rizqara, Restaurant History, Chef Hurika, Best Chefs Dhaka, Premium Dining Mission"
       />
       {/* Hero */}
       <div className="relative py-24 px-4 text-center overflow-hidden" style={{ background: 'linear-gradient(135deg, #6B0F0F, #4A0A0A)' }}>
@@ -38,7 +38,7 @@ export function About() {
             About <span style={{ color: '#D4AF37' }}>Rizqara</span>
           </h1>
           <p style={{ color: 'rgba(255,255,255,0.8)', fontSize: '17px', lineHeight: '1.7' }}>
-            A story of passion, excellence, and an unwavering commitment to delivering the finest dining experience in Barishal.
+            A story of passion, excellence, and an unwavering commitment to delivering the finest dining experience in Dhaka.
           </p>
         </div>
       </div>
@@ -70,11 +70,11 @@ export function About() {
                 <span style={{ color: '#6B0F0F', fontSize: '14px', fontWeight: 600, letterSpacing: '2px', textTransform: 'uppercase', fontFamily: 'var(--font-heading)' }}>Who We Are</span>
               </div>
               <h2 style={{ fontFamily: 'var(--font-heading)', fontWeight: 800, fontSize: 'clamp(28px, 4vw, 42px)', color: '#111', lineHeight: 1.2, marginBottom: '20px' }}>
-                Barishal's Premier <span style={{ color: '#6B0F0F' }}>Dining Experience</span>
+                Dhaka's Premier <span style={{ color: '#6B0F0F' }}>Dining Experience</span>
               </h2>
               <div className="space-y-4" style={{ color: '#6B7280', fontSize: '15px', lineHeight: '1.8' }}>
                 <p>
-                  Rizqara Restaurant was founded in 2024 with a simple yet powerful vision: to bring world-class dining to the heart of Barishal. What started as a small restaurant with big dreams has grown into the most celebrated dining destination in the region.
+                  Rizqara Restaurant was founded in 2024 with a simple yet powerful vision: to bring world-class dining to the heart of Dhaka. What started as a small restaurant with big dreams has grown into the most celebrated dining destination in the region.
                 </p>
                 <p>
                   Our name "Rizqara" reflects our philosophy — every plate we serve is a blessing, crafted with gratitude and care. We believe that exceptional food has the power to bring people together, create memories, and nourish the soul.
@@ -199,7 +199,7 @@ export function About() {
             Experience Rizqara <span style={{ color: '#D4AF37' }}>Today</span>
           </h2>
           <p style={{ color: 'rgba(255,255,255,0.75)', fontSize: '16px', marginBottom: '28px', lineHeight: '1.7' }}>
-            Join thousands of satisfied guests and discover why Rizqara is Barishal's most loved restaurant.
+            Join thousands of satisfied guests and discover why Rizqara is Dhaka's most loved restaurant.
           </p>
           <div className="flex flex-wrap justify-center gap-4">
             <Link

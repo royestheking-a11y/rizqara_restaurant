@@ -120,7 +120,7 @@ Slides
 Slide 1
 
 RIZQARA RESTAURANT
-Premium Dining Experience in Barishal
+Premium Dining Experience in Dhaka
 
 Button
 
@@ -144,7 +144,7 @@ About Rizqara Restaurant
 
 Content
 
-Rizqara Restaurant is a premium dining destination in Barishal, offering a wide variety of delicious meals prepared with fresh ingredients and expert care. We are committed to delivering exceptional taste, quality service, and a comfortable dining experience for families and friends.
+Rizqara Restaurant is a premium dining destination in Dhaka, offering a wide variety of delicious meals prepared with fresh ingredients and expert care. We are committed to delivering exceptional taste, quality service, and a comfortable dining experience for families and friends.
 
 Button
 
@@ -331,7 +331,7 @@ Google Map Embed
 
 Location
 
-M9W9+R6 Barishal
+M9W9+R6 Dhaka
 
 Features
 
@@ -496,8 +496,8 @@ Secure
 SEO System (Ready to Implement)
 Title
 
-Rizqara Restaurant — Best Restaurant in Barishal
+Rizqara Restaurant — Best Restaurant in Dhaka
 
 Meta Description
 
-Rizqara Restaurant is a premium restaurant in Barishal offering delicious Chinese, BBQ, and traditional meals. Book a table or order online today.
+Rizqara Restaurant is a premium restaurant in Dhaka offering delicious Chinese, BBQ, and traditional meals. Book a table or order online today.

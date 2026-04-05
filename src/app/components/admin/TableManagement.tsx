@@ -256,7 +256,7 @@ function InvoiceModal({ orderId, onClose }: { orderId: string; onClose: () => vo
           {/* Invoice header */}
           <div className="text-center mb-5 pb-5" style={{ borderBottom: '2px dashed rgba(107,15,15,0.15)' }}>
             <h2 style={{ fontFamily: 'var(--font-heading)', fontWeight: 900, fontSize: '18px', color: '#111' }}>Rizqara Restaurant</h2>
-            <p style={{ fontSize: '12px', color: '#6B7280', marginTop: '4px' }}>Barishal, Bangladesh</p>
+            <p style={{ fontSize: '12px', color: '#6B7280', marginTop: '4px' }}>Dhaka, Bangladesh</p>
           </div>
 
           <div className="grid grid-cols-2 gap-3 mb-4 text-xs">

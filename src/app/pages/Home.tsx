@@ -15,8 +15,8 @@ const heroSlides = [
     subtitle: 'Premium Dining Experience',
     title: 'RIZQARA',
     titleLine2: 'RESTAURANT',
-    description: 'The finest dining destination in Barishal — where extraordinary flavors meet unmatched elegance.',
-    badge: '★ Best Restaurant in Barishal',
+    description: 'The finest dining destination in Dhaka — where extraordinary flavors meet unmatched elegance.',
+    badge: '★ Best Restaurant in Dhaka',
   },
   {
     image: 'https://images.unsplash.com/photo-1768729341078-9da4e0ea959e?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxmcmVzaCUyMGluZ3JlZGllbnRzJTIwaGVyYnMlMjBzcGljZXMlMjBjb29raW5nfGVufDF8fHx8MTc3NTA1ODQyNHww&ixlib=rb-4.1.0&q=80&w=1080',
@@ -114,9 +114,9 @@ export function Home() {
   return (
     <div>
       <SEO 
-        title="Best Restaurant in Barishal"
-        description="Rizqara Restaurant offers the most exquisite dining experience in Barishal. Explore our premium Asian fusion menu, book your table online, and enjoy authentic flavors."
-        keywords="Rizqara Restaurant, Best Restaurant Barishal, Fine Dining Bangladesh, Asian Fusion Barishal, Top Rated Restaurant Barishal"
+        title="Best Restaurant in Dhaka"
+        description="Rizqara Restaurant offers the most exquisite dining experience in Dhaka. Explore our premium Asian fusion menu, book your table online, and enjoy authentic flavors."
+        keywords="Rizqara Restaurant, Best Restaurant Dhaka, Fine Dining Bangladesh, Asian Fusion Dhaka, Top Rated Restaurant Dhaka"
       />
       <script type="application/ld+json">
         {JSON.stringify({
@@ -129,8 +129,8 @@ export function Home() {
           "address": {
             "@type": "PostalAddress",
             "streetAddress": "M9W9+R6, Natun Bazar",
-            "addressLocality": "Barishal",
-            "addressRegion": "Barishal Division",
+            "addressLocality": "Dhaka",
+            "addressRegion": "Dhaka Division",
             "postalCode": "8200",
             "addressCountry": "BD"
           },
@@ -349,10 +349,10 @@ export function Home() {
                 About <span style={{ color: '#6B0F0F' }}>Rizqara</span> Restaurant
               </h2>
               <p style={{ color: '#6B7280', fontSize: '16px', lineHeight: '1.8', marginBottom: '16px' }}>
-                Rizqara Restaurant is a premium dining destination in Barishal, offering a wide variety of delicious meals prepared with fresh ingredients and expert care. We are committed to delivering exceptional taste, quality service, and a comfortable dining experience for families and friends.
+                Rizqara Restaurant is a premium dining destination in Dhaka, offering a wide variety of delicious meals prepared with fresh ingredients and expert care. We are committed to delivering exceptional taste, quality service, and a comfortable dining experience for families and friends.
               </p>
               <p style={{ color: '#6B7280', fontSize: '16px', lineHeight: '1.8', marginBottom: '28px' }}>
-                Founded in 2024, Rizqara has grown to become the most celebrated restaurant in Barishal, winning multiple awards for culinary excellence and outstanding customer service.
+                Founded in 2024, Rizqara has grown to become the most celebrated restaurant in Dhaka, winning multiple awards for culinary excellence and outstanding customer service.
               </p>
 
               <div className="grid grid-cols-2 gap-4 mb-8">
@@ -820,14 +820,14 @@ export function Home() {
               <div className="section-line" />
             </div>
             <h2 style={{ fontFamily: 'var(--font-heading)', fontWeight: 800, fontSize: 'clamp(24px, 3vw, 36px)', color: '#111' }}>
-              Visit Us in <span style={{ color: '#6B0F0F' }}>Barishal</span>
+              Visit Us in <span style={{ color: '#6B0F0F' }}>Dhaka</span>
             </h2>
           </div>
 
           <div className="grid lg:grid-cols-3 gap-6">
             <div className="lg:col-span-2 rounded-2xl overflow-hidden shadow-xl" style={{ height: '380px' }}>
               <iframe
-                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3687.0!2d90.3637!3d22.7010!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3754b2f2e11d2b7b%3A0x0!2sM9W9%2BR6%2C+Barishal%2C+Bangladesh!5e0!3m2!1sen!2sbd!4v1680000000000!5m2!1sen!2sbd"
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3687.0!2d90.3637!3d22.7010!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3754b2f2e11d2b7b%3A0x0!2sM9W9%2BR6%2C+Dhaka%2C+Bangladesh!5e0!3m2!1sen!2sbd!4v1680000000000!5m2!1sen!2sbd"
                 width="100%"
                 height="100%"
                 style={{ border: 0 }}
@@ -839,7 +839,7 @@ export function Home() {
 
             <div className="space-y-4">
               {[
-                { icon: MapPin, title: 'Address', content: 'M9W9+R6, Natun Bazar, Barishal, Bangladesh' },
+                { icon: MapPin, title: 'Address', content: 'M9W9+R6, Natun Bazar, Dhaka, Bangladesh' },
                 { icon: Phone, title: 'Phone', content: '+880 1800-000000\n+880 1900-000000' },
                 { icon: Clock, title: 'Opening Hours', content: 'Mon–Thu: 11AM – 11PM\nFri–Sat: 11AM – 12AM\nSunday: 12PM – 10PM' },
               ].map(({ icon: Icon, title, content }) => (
@@ -880,7 +880,7 @@ export function Home() {
             Ready for an <span style={{ color: '#6B0F0F' }}>Extraordinary</span> <br />Dining Experience?
           </h2>
           <p style={{ color: '#6B7280', fontSize: '17px', maxWidth: '500px', margin: '0 auto 32px', lineHeight: '1.7' }}>
-            Join thousands of satisfied guests who have made Rizqara their favorite dining destination in Barishal.
+            Join thousands of satisfied guests who have made Rizqara their favorite dining destination in Dhaka.
           </p>
           <div className="flex flex-wrap justify-center gap-4">
             <Link

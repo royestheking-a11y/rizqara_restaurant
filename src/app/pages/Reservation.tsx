@@ -114,7 +114,7 @@ export function Reservation() {
               { icon: Clock, title: 'Opening Hours', lines: ['Mon–Thu: 11AM – 11PM', 'Fri–Sat: 11AM – 12AM', 'Sunday: 12PM – 10PM'] },
               { icon: Phone, title: 'Contact', lines: ['+880 1800-000000', '+880 1900-000000'] },
               { icon: Mail, title: 'Email', lines: ['reservations@rizqara.com'] },
-              { icon: MapPin, title: 'Location', lines: ['M9W9+R6, Natun Bazar,', 'Barishal, Bangladesh'] },
+              { icon: MapPin, title: 'Location', lines: ['M9W9+R6, Natun Bazar,', 'Dhaka, Bangladesh'] },
             ].map(({ icon: Icon, title, lines }) => (
               <div key={title} className="flex gap-4 p-5 rounded-2xl" style={{ backgroundColor: '#F9F5F0', border: '1px solid rgba(107,15,15,0.08)' }}>
                 <div className="w-10 h-10 rounded-full flex items-center justify-center flex-shrink-0" style={{ background: 'linear-gradient(135deg, #6B0F0F, #4A0A0A)' }}>
@@ -269,7 +269,7 @@ export function Reservation() {
           </div>
           <div className="rounded-3xl overflow-hidden shadow-xl" style={{ height: '400px' }}>
             <iframe
-              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3687.0!2d90.3637!3d22.7010!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3754b2f2e11d2b7b%3A0x0!2sM9W9%2BR6%2C+Barishal%2C+Bangladesh!5e0!3m2!1sen!2sbd!4v1680000000000!5m2!1sen!2sbd"
+              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3687.0!2d90.3637!3d22.7010!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3754b2f2e11d2b7b%3A0x0!2sM9W9%2BR6%2C+Dhaka%2C+Bangladesh!5e0!3m2!1sen!2sbd!4v1680000000000!5m2!1sen!2sbd"
               width="100%"
               height="100%"
               style={{ border: 0 }}

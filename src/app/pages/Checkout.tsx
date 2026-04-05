@@ -19,7 +19,7 @@ export function Checkout() {
   const navigate = useNavigate();
   const [step, setStep] = useState(1);
   const [paymentMethod, setPaymentMethod] = useState<PaymentMethod>('Cash on Delivery');
-  const [form, setForm] = useState({ name: '', phone: '', address: '', city: 'Barishal', notes: '' });
+  const [form, setForm] = useState({ name: '', phone: '', address: '', city: 'Dhaka', notes: '' });
   const [loading, setLoading] = useState(false);
   const [orderId, setOrderId] = useState('');
 
@@ -342,8 +342,8 @@ export function Checkout() {
                         onChange={e => setForm(f => ({ ...f, city: e.target.value }))}
                         style={{ ...inputStyle, paddingLeft: '16px' }}
                       >
-                        <option value="Barishal">Barishal</option>
-                        <option value="Barishal Sadar">Barishal Sadar</option>
+                        <option value="Dhaka">Dhaka</option>
+                        <option value="Dhaka Sadar">Dhaka Sadar</option>
                         <option value="Wazirpur">Wazirpur</option>
                         <option value="Muladi">Muladi</option>
                       </select>

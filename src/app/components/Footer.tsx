@@ -21,7 +21,7 @@ export function Footer() {
               </div>
             </div>
             <p style={{ color: '#9CA3AF', fontSize: '14px', maxWidth: '400px', textAlign: 'center', lineHeight: '1.6' }}>
-              Premium dining experience in Barishal. Bringing you the finest flavors from around the world, crafted with love and expertise.
+              Premium dining experience in Dhaka. Bringing you the finest flavors from around the world, crafted with love and expertise.
             </p>
             <Link
               to="/reservation"
@@ -44,7 +44,7 @@ export function Footer() {
               About Rizqara
             </h3>
             <p style={{ color: '#9CA3AF', fontSize: '14px', lineHeight: '1.8' }}>
-              Rizqara Restaurant is a premium dining destination in Barishal, offering a wide variety of delicious meals prepared with fresh ingredients and expert care since 2018.
+              Rizqara Restaurant is a premium dining destination in Dhaka, offering a wide variety of delicious meals prepared with fresh ingredients and expert care since 2018.
             </p>
             <div className="flex gap-3 mt-5">
               {[
@@ -126,7 +126,7 @@ export function Footer() {
                   <MapPin size={14} style={{ color: '#D4AF37' }} />
                 </div>
                 <span style={{ color: '#9CA3AF', fontSize: '14px', lineHeight: '1.6' }}>
-                  M9W9+R6, Natun Bazar, Barishal, Bangladesh
+                  M9W9+R6, Natun Bazar, Dhaka, Bangladesh
                 </span>
               </li>
               <li className="flex gap-3">

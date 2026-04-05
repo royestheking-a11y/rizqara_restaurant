@@ -19,15 +19,15 @@ export const SEO: React.FC<SEOProps> = ({
   type = 'website',
 }) => {
   const siteTitle = 'Rizqara Restaurant';
-  const fullTitle = title ? `${title} | ${siteTitle}` : `${siteTitle} | Premium Dining in Barishal`;
-  const defaultDesc = 'Experience the finest Asian and Fusion cuisine at Rizqara Restaurant in Barishal. Exquisite dining, professional catering, and real-time table ordering.';
+  const fullTitle = title ? `${title} | ${siteTitle}` : `${siteTitle} | Premium Dining in Dhaka`;
+  const defaultDesc = 'Experience the finest Asian and Fusion cuisine at Rizqara Restaurant in Dhaka. Exquisite dining, professional catering, and real-time table ordering.';
 
   return (
     <Helmet>
       {/* Standard metadata tags */}
       <title>{fullTitle}</title>
       <meta name="description" content={description || defaultDesc} />
-      <meta name="keywords" content={keywords || 'Restaurant Barishal, Fine Dining, Asian Fusion, Rizqara Restaurant, Best Food Barishal, Catering Barishal'} />
+      <meta name="keywords" content={keywords || 'Restaurant Dhaka, Fine Dining, Asian Fusion, Rizqara Restaurant, Best Food Dhaka, Catering Dhaka'} />
 
       {/* Open Graph / Facebook tags */}
       <meta property="og:type" content={type} />
