@@ -179,7 +179,13 @@ export function Home() {
               transform: currentSlide === i ? 'scale(1)' : 'scale(1.05)',
             }}
           >
-            <img src={slide.image} alt={slide.title} className="w-full h-full object-cover" />
+            <img 
+              src={slide.image} 
+              alt={slide.title} 
+              className="w-full h-full object-cover" 
+              loading="eager"
+              fetchPriority={currentSlide === i ? "high" : "auto"}
+            />
             <div className="absolute inset-0" style={{ background: 'linear-gradient(to bottom, rgba(0,0,0,0.25) 0%, rgba(0,0,0,0.55) 60%, rgba(0,0,0,0.7) 100%)' }} />
           </div>
         ))}

@@ -26,5 +26,17 @@ export default defineConfig({
         changeOrigin: true,
       }
     }
+  },
+  build: {
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          'vendor-ui': ['@mui/material', '@mui/icons-material', 'lucide-react'],
+          'vendor-motion': ['motion'],
+          'vendor-react': ['react', 'react-dom', 'react-router', 'react-helmet-async'],
+        }
+      }
+    },
+    chunkSizeWarningLimit: 1000,
   }
 })

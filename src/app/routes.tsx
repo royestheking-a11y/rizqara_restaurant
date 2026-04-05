@@ -1,25 +1,40 @@
+import { lazy, Suspense } from 'react';
 import { createBrowserRouter, Outlet } from 'react-router';
 import { AppProvider } from './context/AppContext';
 import { Layout } from './components/Layout';
-import { Home } from './pages/Home';
-import { About } from './pages/About';
-import { Menu } from './pages/Menu';
-import { ProductDetail } from './pages/ProductDetail';
-import { Gallery } from './pages/Gallery';
-import { Catering } from './pages/Catering';
-import { Reservation } from './pages/Reservation';
-import { Contact } from './pages/Contact';
-import { Checkout } from './pages/Checkout';
-import { OrderTracking } from './pages/OrderTracking';
-import { Admin } from './pages/Admin';
-import { TableOrder } from './pages/TableOrder';
-import { KitchenDisplay } from './pages/KitchenDisplay';
-import { NotFound } from './pages/NotFound';
+
+// Lazy load all pages for maximum performance
+const Home = lazy(() => import('./pages/Home').then(m => ({ default: m.Home })));
+const About = lazy(() => import('./pages/About').then(m => ({ default: m.About })));
+const Menu = lazy(() => import('./pages/Menu').then(m => ({ default: m.Menu })));
+const ProductDetail = lazy(() => import('./pages/ProductDetail').then(m => ({ default: m.ProductDetail })));
+const Gallery = lazy(() => import('./pages/Gallery').then(m => ({ default: m.Gallery })));
+const Catering = lazy(() => import('./pages/Catering').then(m => ({ default: m.Catering })));
+const Reservation = lazy(() => import('./pages/Reservation').then(m => ({ default: m.Reservation })));
+const Contact = lazy(() => import('./pages/Contact').then(m => ({ default: m.Contact })));
+const Checkout = lazy(() => import('./pages/Checkout').then(m => ({ default: m.Checkout })));
+const OrderTracking = lazy(() => import('./pages/OrderTracking').then(m => ({ default: m.OrderTracking })));
+const Admin = lazy(() => import('./pages/Admin').then(m => ({ default: m.Admin })));
+const TableOrder = lazy(() => import('./pages/TableOrder').then(m => ({ default: m.TableOrder })));
+const KitchenDisplay = lazy(() => import('./pages/KitchenDisplay').then(m => ({ default: m.KitchenDisplay })));
+const NotFound = lazy(() => import('./pages/NotFound').then(m => ({ default: m.NotFound })));
+
+// Premium loading fallback
+const PageLoader = () => (
+  <div className="min-h-[60vh] flex items-center justify-center bg-[#0a0a0a]">
+    <div className="relative w-16 h-16">
+      <div className="absolute inset-0 border-4 border-primary-500/10 rounded-full"></div>
+      <div className="absolute inset-0 border-4 border-primary-500 border-t-transparent rounded-full animate-spin"></div>
+    </div>
+  </div>
+);
 
 function Root() {
   return (
     <AppProvider>
-      <Outlet />
+      <Suspense fallback={<PageLoader />}>
+        <Outlet />
+      </Suspense>
     </AppProvider>
   );
 }

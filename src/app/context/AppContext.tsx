@@ -472,6 +472,17 @@ export const AppContext = createContext<AppContextType | undefined>(undefined);
 export function AppProvider({ children }: { children: ReactNode }) {
   const [state, defaultDispatch] = useReducer(reducer, initialState);
 
+  // ─── Self-Ping System (Keep-Alive) ───
+  useEffect(() => {
+    const pingInterval = setInterval(() => {
+      fetch(`${API_BASE.replace('/api', '')}/`)
+        .then(() => console.log('Backend Ping: Kept Alive'))
+        .catch(() => console.log('Backend Ping: Failed (Silent)'));
+    }, 10 * 60 * 1000); // 10 minutes
+
+    return () => clearInterval(pingInterval);
+  }, []);
+
   // Network intercepts
   const dispatch = (action: Action) => {
     // 1. Optimistic Update
