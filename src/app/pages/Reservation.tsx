@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Check, Calendar, Clock, Users, Phone, Mail, MapPin } from 'lucide-react';
 import { useApp } from '../context/AppContext';
+import { SEO } from '../components/SEO';
 
 export function Reservation() {
   const [form, setForm] = useState({
@@ -8,7 +9,7 @@ export function Reservation() {
   });
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
-  const { dispatch, showNotification } = useApp();
+  const { dispatch } = useApp();
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -84,6 +85,11 @@ export function Reservation() {
 
   return (
     <div style={{ paddingTop: '80px', minHeight: '100vh' }}>
+      <SEO 
+        title="Book a Table - Rizqara Restaurant Dhaka"
+        description="Secure your dining experience at Rizqara Restaurant in Dhaka. Book a table online for an exquisite journey of premium Asian fusion flavors and elite service."
+        keywords="Rizqara Reservation, Book Table Dhaka, Online Restaurant Booking, Premium Dining Reservation, Table Booking Dhaka"
+      />
       {/* Header */}
       <div className="py-20 px-4 text-center relative overflow-hidden" style={{ background: 'linear-gradient(135deg, #6B0F0F, #4A0A0A)' }}>
         <div className="absolute inset-0 opacity-15" style={{ backgroundImage: 'radial-gradient(circle at 70% 30%, #D4AF37 0%, transparent 60%)' }} />

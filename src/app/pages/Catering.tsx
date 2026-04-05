@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
-import { Check, Star, Users, Calendar, MapPin, ArrowRight, Heart, Gift, Briefcase, Sparkles } from 'lucide-react';
+import { Check, Star, Users, ArrowRight, Heart, Gift, Briefcase, Sparkles } from 'lucide-react';
 import { cateringPackages } from '../data/restaurantData';
 import { useApp } from '../context/AppContext';
+import { SEO } from '../components/SEO';
 
 const eventTypes = ['Wedding', 'Birthday', 'Corporate Event', 'Party', 'Engagement', 'Anniversary', 'Other'];
 
@@ -63,6 +64,11 @@ export function Catering() {
 
   return (
     <div style={{ paddingTop: '80px', minHeight: '100vh' }}>
+      <SEO 
+        title="Premium Catering Services in Dhaka - Rizqara Restaurant"
+        description="Make your events unforgettable with Rizqara's professional catering services in Dhaka. We provide elite Asian fusion menus for weddings, corporate events, and private parties."
+        keywords="Rizqara Catering, Best Catering Dhaka, Wedding Catering Dhaka, Corporate Event Catering, Private Party Catering Dhaka"
+      />
       {/* Header */}
       <div className="py-20 px-4 text-center relative overflow-hidden" style={{ background: 'linear-gradient(135deg, #6B0F0F, #4A0A0A)' }}>
         <div className="absolute inset-0 opacity-15" style={{ backgroundImage: 'radial-gradient(circle at 25% 50%, #D4AF37 0%, transparent 60%)' }} />

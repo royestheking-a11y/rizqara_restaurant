@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { X, ZoomIn, ChevronLeft, ChevronRight } from 'lucide-react';
 import { useApp } from '../context/AppContext';
+import { SEO } from '../components/SEO';
 
 const categories = ['All', 'Restaurant', 'Food', 'Events', 'Kitchen'];
 
@@ -20,6 +21,11 @@ export function Gallery() {
 
   return (
     <div style={{ paddingTop: '80px', minHeight: '100vh' }}>
+      <SEO 
+        title="Our Gallery - Rizqara Restaurant Dhaka"
+        description="Experience a visual journey through Rizqara Restaurant in Dhaka. See our premium spaces, exquisite dishes, and memorable events captured in our photo gallery."
+        keywords="Rizqara Gallery, Restaurant Photos Dhaka, Food Photography Dhaka, Rizqara Events, Luxury Dining Visuals"
+      />
       {/* Header */}
       <div className="py-16 px-4 text-center relative overflow-hidden" style={{ background: 'linear-gradient(135deg, #6B0F0F, #4A0A0A)' }}>
         <div className="absolute inset-0 opacity-10" style={{ backgroundImage: 'radial-gradient(circle at 80% 50%, #D4AF37 0%, transparent 50%)' }} />
