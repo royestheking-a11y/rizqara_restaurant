@@ -459,7 +459,10 @@ interface AppContextType {
 }
 
 // ─── Environment Configuration ──────────────────────────────────────────────
-export const API_BASE = import.meta.env.VITE_API_BASE_URL || '/api';
+const rawApiBase = import.meta.env.VITE_API_BASE_URL || '';
+export const API_BASE = rawApiBase 
+  ? (rawApiBase.endsWith('/api') ? rawApiBase : `${rawApiBase.replace(/\/$/, '')}/api`)
+  : '/api';
 
 export const AppContext = createContext<AppContextType | undefined>(undefined);
 
