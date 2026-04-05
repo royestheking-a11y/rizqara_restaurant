@@ -1,3 +1,4 @@
+/// <reference types="vite/client" />
 import React, { createContext, useContext, useReducer, useEffect, ReactNode } from 'react';
 
 // ─── Existing Types ────────────────────────────────────────────────────────────
