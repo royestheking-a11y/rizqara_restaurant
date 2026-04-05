@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { useParams, useNavigate, Link } from 'react-router';
 import { Star, Minus, Plus, ShoppingCart, ChevronRight, Flame, Clock, Users, Leaf, ArrowLeft, Heart, ThumbsUp, Send, MessageSquare, Lock, CheckCircle, ShoppingBag } from 'lucide-react';
 import { useApp } from '../context/AppContext';
@@ -409,18 +409,18 @@ export function ProductDetail() {
               </div>
             )}
             {activeTab === 'nutrition' && (
-              <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
+              <div className="flex flex-wrap gap-3 sm:grid sm:grid-cols-4 sm:gap-4">
                 {[
                   { label: 'Calories', value: item.nutrition.calories, unit: 'kcal', color: '#DC2626' },
                   { label: 'Protein', value: item.nutrition.protein, unit: '', color: '#2563EB' },
                   { label: 'Carbs', value: item.nutrition.carbs, unit: '', color: '#D97706' },
                   { label: 'Fat', value: item.nutrition.fat, unit: '', color: '#16A34A' },
                 ].map(n => (
-                  <div key={n.label} className="text-center p-4 rounded-xl bg-white shadow-sm">
-                    <div style={{ fontFamily: 'var(--font-heading)', fontWeight: 800, fontSize: '24px', color: n.color }}>
+                  <div key={n.label} className="flex-1 min-w-[100px] text-center p-3 sm:p-4 rounded-xl bg-white shadow-sm border border-black/5">
+                    <div style={{ fontFamily: 'var(--font-heading)', fontWeight: 800, fontSize: 'clamp(18px, 4vw, 24px)', color: n.color, lineHeight: 1 }}>
                       {n.value}{n.unit}
                     </div>
-                    <div style={{ fontSize: '13px', color: '#6B7280', marginTop: '4px' }}>{n.label}</div>
+                    <div style={{ fontSize: '11px', color: '#6B7280', marginTop: '4px', fontWeight: 600, textTransform: 'uppercase' }}>{n.label}</div>
                   </div>
                 ))}
               </div>

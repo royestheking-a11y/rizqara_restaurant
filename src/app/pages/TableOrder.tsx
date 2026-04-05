@@ -3,7 +3,7 @@ import { useParams } from 'react-router';
 import {
   CheckCircle, ChefHat, Bell, Utensils, FileText,
   Star, Clock, Search, ShoppingCart, Plus, Minus,
-  Trash2, ChevronDown, ChevronUp, X, Filter, Flame, Leaf, Eye, Users
+  Trash2, X, Filter, Flame, Leaf, Eye, Users
 } from 'lucide-react';
 import { useApp } from '../context/AppContext';
 import type { TableOrder as TableOrderData } from '../context/AppContext';
@@ -78,13 +78,11 @@ function DishDetailOverlay({
   onClose,
   onAdd,
   inCartQuantity,
-  updateQty
 }: {
   item: any;
   onClose: () => void;
   onAdd: (item: any, qty: number, note: string) => void;
   inCartQuantity: number;
-  updateQty: (id: string, qty: number) => void;
 }) {
   const [qty, setQty] = useState(inCartQuantity || 1);
   const [note, setNote] = useState('');
@@ -242,12 +240,9 @@ function DishDetailOverlay({
 
 export function TableOrder() {
   const { tableId } = useParams<{ tableId: string }>();
-  const { state, placeTableOrder } = useApp();
+  const { state, placeTableOrder, addReview, showNotification } = useApp();
 
   const table = state.tables.find(t => t.id === tableId);
-  const activeOrder = state.tableOrders.find(
-    o => o.tableId === tableId && !['Served', 'Paid'].includes(o.status)
-  );
 
   // Local cart
   const [cart, setCart] = useState<LocalCartItem[]>([]);
@@ -263,7 +258,8 @@ export function TableOrder() {
   const [customerNote, setCustomerNote] = useState('');
   const [orderPlaced, setOrderPlaced] = useState(false);
   const [selectedItemSlug, setSelectedItemSlug] = useState<string | null>(null);
-  const [expandedItem, setExpandedItem] = useState<string | null>(null);
+  const [submittedReview, setSubmittedReview] = useState(false);
+  const [reviewForm, setReviewForm] = useState({ rating: 5, comment: '' });
 
   const categories = useMemo(() => {
     const cats = Array.from(new Set(state.menuItems.map(i => i.category)));
@@ -313,10 +309,6 @@ export function TableOrder() {
     }
   };
 
-  const updateNote = (id: string, note: string) => {
-    setCart(prev => prev.map(c => c.item.id === id ? { ...c, note } : c));
-  };
-
   const handlePlaceOrder = () => {
     if (cart.length === 0 || !table) return;
     const orderId = `TBL-${Date.now()}`;
@@ -343,21 +335,10 @@ export function TableOrder() {
     setOrderPlaced(true);
   };
 
-  // Track live status for animation triggers
-  const [liveStatus, setLiveStatus] = useState<string>('');
-  useEffect(() => {
-    if (activeOrder) setLiveStatus(activeOrder.status);
-  }, [activeOrder]);
-
-  // The AppContext storage event listener (added in AppContext.tsx) handles
-  // cross-tab sync automatically, so this component will re-render whenever
-  // the Admin or Kitchen Display updates the order status.
-
   // After order placed, re-read from context
   const placedOrder = state.tableOrders.find(
-    o => o.tableId === tableId && !['Served', 'Paid'].includes(o.status)
+    o => o.tableId === tableId && (o.status !== 'Paid' && (o.status !== 'Served' || !submittedReview))
   );
-  const currentStage = placedOrder ? statusConfig[placedOrder.status as keyof typeof statusConfig] : null;
 
   // ── Table not found ──────────────────────────────────────────────────────────
   if (!table) {
@@ -378,6 +359,23 @@ export function TableOrder() {
   if (orderPlaced || placedOrder) {
     const order = placedOrder;
     const stepIndex = order ? (statusConfig[order.status as keyof typeof statusConfig]?.step ?? 0) : 0;
+    const isServed = order?.status === 'Served';
+
+    const handleReviewSubmit = () => {
+      if (!reviewForm.comment.trim()) {
+        showNotification('Please share your thoughts!', 'info');
+        return;
+      }
+      addReview({
+        id: Math.random().toString(36).substr(2, 9),
+        name: 'Guest Customer',
+        rating: reviewForm.rating,
+        comment: reviewForm.comment,
+        date: new Date().toISOString().split('T')[0],
+        location: `${table.area} Area, Table ${table.tableNumber}`,
+      });
+      setSubmittedReview(true);
+    };
 
     return (
       <div className="min-h-screen" style={{ background: 'linear-gradient(160deg, #1A0000 0%, #2D0000 40%, #4A0A0A 100%)' }}>
@@ -395,127 +393,217 @@ export function TableOrder() {
         </div>
 
         <div className="max-w-md mx-auto px-5 py-8">
-          {/* Thank you banner */}
-          <div className="text-center mb-8">
-            <div
-              className="w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-5 shadow-2xl"
-              style={{ background: 'linear-gradient(135deg, #D4AF37, #B8960C)' }}
-            >
-              <ChefHat size={36} style={{ color: '#1A0000' }} />
-            </div>
-            <h1 style={{ fontFamily: 'var(--font-heading)', fontWeight: 900, fontSize: '26px', color: '#fff', marginBottom: '8px' }}>
-              Thank you for your order!
-            </h1>
-            <p style={{ color: 'rgba(255,255,255,0.6)', fontSize: '14px' }}>
-              Our kitchen is working on your order. Sit back & relax!
-            </p>
-            {order && (
-              <div className="mt-3 flex items-center justify-center gap-2">
-                <Clock size={13} style={{ color: '#D4AF37' }} />
-                <span style={{ color: '#D4AF37', fontSize: '13px', fontFamily: 'var(--font-heading)', fontWeight: 600 }}>
-                  Elapsed: <ElapsedTimer since={order.createdAt} />
-                </span>
+          {submittedReview ? (
+            <div className="text-center py-12">
+              <div className="w-24 h-24 rounded-full bg-green-500/20 flex items-center justify-center mx-auto mb-6 border border-green-500/30">
+                <CheckCircle size={48} className="text-green-500" />
               </div>
-            )}
-          </div>
+              <h2 style={{ fontFamily: 'var(--font-heading)', fontWeight: 900, fontSize: '28px', color: '#fff', marginBottom: '12px' }}>
+                Feedback Received!
+              </h2>
+              <p style={{ color: 'rgba(255,255,255,0.6)', fontSize: '16px', lineHeight: 1.6 }}>
+                Thank you for your valuable feedback. We hope you loved the food and had a great time!
+              </p>
+              <button 
+                onClick={() => setOrderPlaced(false)}
+                className="mt-10 px-8 py-3 rounded-xl font-bold transition-all active:scale-95"
+                style={{ background: 'linear-gradient(135deg, #D4AF37, #B8960C)', color: '#1A0000' }}
+              >
+                Back to Menu
+              </button>
+            </div>
+          ) : isServed ? (
+            <div className="space-y-6">
+              {/* Thank you banner */}
+              <div className="text-center mb-8">
+                <div
+                  className="w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-5 shadow-2xl"
+                  style={{ background: 'linear-gradient(135deg, #D4AF37, #B8960C)' }}
+                >
+                  <ChefHat size={36} style={{ color: '#1A0000' }} />
+                </div>
+                <h1 style={{ fontFamily: 'var(--font-heading)', fontWeight: 900, fontSize: '26px', color: '#fff', marginBottom: '8px' }}>
+                  Hope you enjoyed!
+                </h1>
+                <p style={{ color: 'rgba(255,255,255,0.6)', fontSize: '14px' }}>
+                  Your food has been served. We'd love to hear about your experience!
+                </p>
+              </div>
 
-          {/* Cooking Progress */}
-          <div className="p-5 rounded-2xl mb-5" style={{ background: 'rgba(255,255,255,0.06)', border: '1px solid rgba(255,255,255,0.1)' }}>
-            <p style={{ color: 'rgba(255,255,255,0.5)', fontSize: '11px', fontFamily: 'var(--font-heading)', fontWeight: 600, letterSpacing: '1.5px', textTransform: 'uppercase', marginBottom: '16px' }}>Order Progress</p>
-            <div className="space-y-4">
-              {cookingStages.map((stage, idx) => {
-                const Icon = stage.icon;
-                const isActive = idx === stepIndex;
-                const isDone = idx < stepIndex;
-                return (
-                  <div key={stage.key} className="flex items-center gap-4">
-                    <div
-                      className="w-10 h-10 rounded-full flex items-center justify-center flex-shrink-0 transition-all duration-500"
-                      style={{
-                        background: isDone ? 'linear-gradient(135deg, #16A34A, #15803D)' : isActive ? 'linear-gradient(135deg, #D4AF37, #B8960C)' : 'rgba(255,255,255,0.08)',
-                        border: isActive ? '2px solid rgba(212,175,55,0.5)' : '2px solid transparent',
-                        boxShadow: isActive ? '0 0 20px rgba(212,175,55,0.4)' : 'none',
-                      }}
+              {/* Review Form */}
+              <div className="p-6 rounded-3xl bg-white/5 border border-white/10 backdrop-blur-md">
+                <p style={{ color: '#D4AF37', fontSize: '11px', fontFamily: 'var(--font-heading)', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '1px', marginBottom: '20px', textAlign: 'center' }}>
+                  Rate your experience
+                </p>
+                
+                <div className="flex justify-center gap-3 mb-8">
+                  {[1, 2, 3, 4, 5].map((star) => (
+                    <button
+                      key={star}
+                      onClick={() => setReviewForm({ ...reviewForm, rating: star })}
+                      className="transition-all transform hover:scale-110"
                     >
-                      <Icon size={18} style={{ color: isDone || isActive ? (isDone ? '#fff' : '#1A0000') : 'rgba(255,255,255,0.3)' }} />
-                    </div>
-                    <div className="flex-1">
-                      <p style={{
-                        fontFamily: 'var(--font-heading)',
-                        fontWeight: 700,
-                        fontSize: '14px',
-                        color: isDone ? '#86EFAC' : isActive ? '#D4AF37' : 'rgba(255,255,255,0.35)',
-                        transition: 'color 0.5s',
-                      }}>
-                        {stage.label}
-                        {isActive && (
-                          <span style={{ fontSize: '11px', marginLeft: '8px', opacity: 0.8 }}>← Current</span>
-                        )}
-                      </p>
-                      {isActive && (
-                        <p style={{ fontSize: '12px', color: 'rgba(255,255,255,0.5)', marginTop: '2px' }}>{stage.desc}</p>
-                      )}
-                    </div>
-                    {isDone && (
-                      <CheckCircle size={16} style={{ color: '#86EFAC', flexShrink: 0 }} />
-                    )}
-                  </div>
-                );
-              })}
-            </div>
-          </div>
+                      <Star
+                        size={32}
+                        fill={star <= reviewForm.rating ? '#D4AF37' : 'transparent'}
+                        style={{ color: star <= reviewForm.rating ? '#D4AF37' : 'rgba(255,255,255,0.2)' }}
+                      />
+                    </button>
+                  ))}
+                </div>
 
-          {/* Order summary */}
-          {order && (
-            <div className="p-5 rounded-2xl mb-5" style={{ background: 'rgba(255,255,255,0.06)', border: '1px solid rgba(255,255,255,0.1)' }}>
-              <p style={{ color: 'rgba(255,255,255,0.5)', fontSize: '11px', fontFamily: 'var(--font-heading)', fontWeight: 600, letterSpacing: '1.5px', textTransform: 'uppercase', marginBottom: '14px' }}>Your Order</p>
-              <div className="space-y-3">
-                {order.items.map(item => (
-                  <div key={item.itemId} className="flex items-center justify-between">
-                    <div className="flex items-center gap-3">
-                      <img src={item.image} alt={item.name} className="w-10 h-10 rounded-xl object-cover" />
-                      <div>
-                        <p style={{ color: '#fff', fontSize: '13px', fontFamily: 'var(--font-heading)', fontWeight: 600 }}>{item.name}</p>
-                        {item.note && <p style={{ color: 'rgba(255,255,255,0.4)', fontSize: '11px' }}>{item.note}</p>}
-                      </div>
-                    </div>
-                    <div className="text-right">
-                      <p style={{ color: '#D4AF37', fontSize: '13px', fontFamily: 'var(--font-heading)', fontWeight: 700 }}>×{item.quantity}</p>
-                      <p style={{ color: 'rgba(255,255,255,0.6)', fontSize: '12px' }}>৳{item.price * item.quantity}</p>
-                    </div>
-                  </div>
-                ))}
-              </div>
-              <div className="mt-4 pt-4" style={{ borderTop: '1px solid rgba(255,255,255,0.08)' }}>
-                <div className="flex justify-between items-center">
-                  <p style={{ color: 'rgba(255,255,255,0.7)', fontFamily: 'var(--font-heading)', fontWeight: 600, fontSize: '14px' }}>Total</p>
-                  <p style={{ color: '#D4AF37', fontFamily: 'var(--font-heading)', fontWeight: 900, fontSize: '20px' }}>৳{order.total}</p>
+                <div className="space-y-4">
+                  <textarea
+                    placeholder="Share your thoughts with us..."
+                    value={reviewForm.comment}
+                    onChange={(e) => setReviewForm({ ...reviewForm, comment: e.target.value })}
+                    className="w-full bg-white/10 border border-white/10 rounded-2xl p-4 text-white placeholder:text-white/30 text-sm outline-none focus:border-[#D4AF37]/50 transition-colors"
+                    rows={4}
+                    style={{ resize: 'none' }}
+                  />
+                  
+                  <button
+                    onClick={handleReviewSubmit}
+                    className="w-full py-4 rounded-2xl font-bold flex items-center justify-center gap-3 transition-all active:scale-98 shadow-2xl"
+                    style={{ background: 'linear-gradient(135deg, #D4AF37, #B8960C)', color: '#1A0000', fontFamily: 'var(--font-heading)' }}
+                  >
+                    Submit Review
+                  </button>
+                  
+                  <button
+                    onClick={() => setSubmittedReview(true)}
+                    className="w-full py-2 text-white/40 text-xs font-semibold hover:text-white/60 transition-colors"
+                  >
+                    Skip for now
+                  </button>
                 </div>
               </div>
             </div>
-          )}
-
-          {/* Status badge */}
-          {order && (
-            <div className="text-center">
-              {(() => {
-                const cfg = statusConfig[order.status as keyof typeof statusConfig];
-                const StatusIcon = cfg.icon;
-                return (
-                  <div className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full" style={{ backgroundColor: cfg.bg }}>
-                    <StatusIcon size={15} style={{ color: cfg.color }} />
-                    <span style={{ color: cfg.color, fontFamily: 'var(--font-heading)', fontWeight: 700, fontSize: '14px' }}>
-                      {cfg.label}
+          ) : (
+            <>
+              {/* Standard Tracking UI (Cooking Progress) */}
+              <div className="text-center mb-8">
+                <div
+                  className="w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-5 shadow-2xl"
+                  style={{ background: 'linear-gradient(135deg, #D4AF37, #B8960C)' }}
+                >
+                  <ChefHat size={36} style={{ color: '#1A0000' }} />
+                </div>
+                <h1 style={{ fontFamily: 'var(--font-heading)', fontWeight: 900, fontSize: '26px', color: '#fff', marginBottom: '8px' }}>
+                  Order Tracked!
+                </h1>
+                <p style={{ color: 'rgba(255,255,255,0.6)', fontSize: '14px' }}>
+                  Our kitchen is working on your order. Sit back & relax!
+                </p>
+                {order && (
+                  <div className="mt-3 flex items-center justify-center gap-2">
+                    <Clock size={13} style={{ color: '#D4AF37' }} />
+                    <span style={{ color: '#D4AF37', fontSize: '13px', fontFamily: 'var(--font-heading)', fontWeight: 600 }}>
+                      Started: <ElapsedTimer since={order.createdAt} />
                     </span>
                   </div>
-                );
-              })()}
-            </div>
-          )}
+                )}
+              </div>
 
-          <p className="text-center mt-6" style={{ color: 'rgba(255,255,255,0.35)', fontSize: '12px' }}>
-            Payment is handled by staff at the table. Thank you!
-          </p>
+              {/* Cooking Progress */}
+              <div className="p-5 rounded-2xl mb-5" style={{ background: 'rgba(255,255,255,0.06)', border: '1px solid rgba(255,255,255,0.1)' }}>
+                <p style={{ color: 'rgba(255,255,255,0.5)', fontSize: '11px', fontFamily: 'var(--font-heading)', fontWeight: 600, letterSpacing: '1.5px', textTransform: 'uppercase', marginBottom: '16px' }}>Order Progress</p>
+                <div className="space-y-4">
+                  {cookingStages.map((stage, idx) => {
+                    const Icon = stage.icon;
+                    const isActive = idx === stepIndex;
+                    const isDone = idx < stepIndex;
+                    return (
+                      <div key={stage.key} className="flex items-center gap-4">
+                        <div
+                          className="w-10 h-10 rounded-full flex items-center justify-center flex-shrink-0 transition-all duration-500"
+                          style={{
+                            background: isDone ? 'linear-gradient(135deg, #16A34A, #15803D)' : isActive ? 'linear-gradient(135deg, #D4AF37, #B8960C)' : 'rgba(255,255,255,0.08)',
+                            border: isActive ? '2px solid rgba(212,175,55,0.5)' : '2px solid transparent',
+                            boxShadow: isActive ? '0 0 20px rgba(212,175,55,0.4)' : 'none',
+                          }}
+                        >
+                          <Icon size={18} style={{ color: isDone || isActive ? (isDone ? '#fff' : '#1A0000') : 'rgba(255,255,255,0.3)' }} />
+                        </div>
+                        <div className="flex-1">
+                          <p style={{
+                            fontFamily: 'var(--font-heading)',
+                            fontWeight: 700,
+                            fontSize: '14px',
+                            color: isDone ? '#86EFAC' : isActive ? '#D4AF37' : 'rgba(255,255,255,0.35)',
+                            transition: 'color 0.5s',
+                          }}>
+                            {stage.label}
+                            {isActive && (
+                              <span style={{ fontSize: '11px', marginLeft: '8px', opacity: 0.8 }}>← Current</span>
+                            )}
+                          </p>
+                          {isActive && (
+                            <p style={{ fontSize: '12px', color: 'rgba(255,255,255,0.5)', marginTop: '2px' }}>{stage.desc}</p>
+                          )}
+                        </div>
+                        {isDone && (
+                          <CheckCircle size={16} style={{ color: '#86EFAC', flexShrink: 0 }} />
+                        )}
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
+
+              {/* Order summary */}
+              {order && (
+                <div className="p-5 rounded-2xl mb-5" style={{ background: 'rgba(255,255,255,0.06)', border: '1px solid rgba(255,255,255,0.1)' }}>
+                  <p style={{ color: 'rgba(255,255,255,0.5)', fontSize: '11px', fontFamily: 'var(--font-heading)', fontWeight: 600, letterSpacing: '1.5px', textTransform: 'uppercase', marginBottom: '14px' }}>Your Items</p>
+                  <div className="space-y-3">
+                    {order.items.map(item => (
+                      <div key={item.itemId} className="flex items-center justify-between">
+                        <div className="flex items-center gap-3">
+                          <img src={item.image} alt={item.name} className="w-10 h-10 rounded-xl object-cover" />
+                          <div>
+                            <p style={{ color: '#fff', fontSize: '13px', fontFamily: 'var(--font-heading)', fontWeight: 600 }}>{item.name}</p>
+                            {item.note && <p style={{ color: 'rgba(255,255,255,0.4)', fontSize: '11px' }}>{item.note}</p>}
+                          </div>
+                        </div>
+                        <div className="text-right">
+                          <p style={{ color: '#D4AF37', fontSize: '13px', fontFamily: 'var(--font-heading)', fontWeight: 700 }}>×{item.quantity}</p>
+                          <p style={{ color: 'rgba(255,255,255,0.6)', fontSize: '12px' }}>৳{item.price * item.quantity}</p>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                  <div className="mt-4 pt-4" style={{ borderTop: '1px solid rgba(255,255,255,0.08)' }}>
+                    <div className="flex justify-between items-center">
+                      <p style={{ color: 'rgba(255,255,255,0.7)', fontFamily: 'var(--font-heading)', fontWeight: 600, fontSize: '14px' }}>Total Amount</p>
+                      <p style={{ color: '#D4AF37', fontFamily: 'var(--font-heading)', fontWeight: 900, fontSize: '20px' }}>৳{order.total}</p>
+                    </div>
+                  </div>
+                </div>
+              )}
+
+              {/* Status badge */}
+              {order && (
+                <div className="text-center">
+                  {(() => {
+                    const cfg = statusConfig[order.status as keyof typeof statusConfig];
+                    const StatusIcon = cfg.icon;
+                    return (
+                      <div className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full" style={{ backgroundColor: cfg.bg }}>
+                        <StatusIcon size={15} style={{ color: cfg.color }} />
+                        <span style={{ color: cfg.color, fontFamily: 'var(--font-heading)', fontWeight: 700, fontSize: '14px' }}>
+                          {cfg.label}
+                        </span>
+                      </div>
+                    );
+                  })()}
+                </div>
+              )}
+
+              <p className="text-center mt-6" style={{ color: 'rgba(255,255,255,0.35)', fontSize: '12px' }}>
+                Payment is handled by staff at the table.
+              </p>
+            </>
+          )}
         </div>
       </div>
     );
@@ -910,7 +998,6 @@ export function TableOrder() {
                 }];
               });
             }}
-            updateQty={updateQty}
           />
         );
       })()}

@@ -140,6 +140,15 @@ export interface TableOrder {
   customerNote: string;
 }
 
+export interface Review {
+  id: string;
+  name: string;
+  rating: number;
+  comment: string;
+  date: string;
+  location: string;
+}
+
 // ─── State ────────────────────────────────────────────────────────────────────
 
 interface AppState {
@@ -153,6 +162,7 @@ interface AppState {
   carouselSlides: CarouselSlide[];
   tables: RestaurantTable[];
   tableOrders: TableOrder[];
+  reviews: Review[];
   isAdminLoggedIn: boolean;
   cartOpen: boolean;
   notification: { message: string; type: 'success' | 'error' | 'info' } | null;
@@ -195,7 +205,8 @@ type Action =
   | { type: 'PLACE_TABLE_ORDER'; payload: TableOrder }
   | { type: 'UPDATE_TABLE_ORDER_STATUS'; payload: { id: string; status: TableOrderStatus } }
   | { type: 'DELETE_TABLE_ORDER'; payload: string }
-  // System
+  | { type: 'ADD_TABLE_ORDER'; payload: TableOrder }
+  | { type: 'ADD_REVIEW'; payload: Review }
   | { type: 'ADMIN_LOGIN' }
   | { type: 'ADMIN_LOGOUT' }
   | { type: 'TOGGLE_CART' }
@@ -217,6 +228,7 @@ const initialState: AppState = {
   carouselSlides: [],
   tables: [],
   tableOrders: [],
+  reviews: [],
   isAdminLoggedIn: false,
   cartOpen: false,
   notification: null,
@@ -420,6 +432,12 @@ function reducer(state: AppState, action: Action): AppState {
     case 'DELETE_TABLE_ORDER':
       return { ...state, tableOrders: state.tableOrders.filter(o => o.id !== action.payload) };
 
+    case 'ADD_REVIEW':
+      return { ...state, reviews: [action.payload, ...state.reviews] };
+
+    case 'ADD_TABLE_ORDER':
+      return { ...state, tableOrders: [action.payload, ...state.tableOrders] };
+
     case 'ADMIN_LOGIN':
       localStorage.setItem('isAdminLoggedIn', 'true');
       return { ...state, isAdminLoggedIn: true };
@@ -457,6 +475,7 @@ interface AppContextType {
   placeTableOrder: (order: TableOrder) => void;
   updateTableOrderStatus: (id: string, status: TableOrderStatus) => void;
   setTableStatus: (id: string, status: TableStatus, orderId?: string) => void;
+  addReview: (review: Review) => void;
 }
 
 // ─── Environment Configuration ──────────────────────────────────────────────
@@ -575,6 +594,12 @@ export function AppProvider({ children }: { children: ReactNode }) {
           case 'DELETE_TABLE_ORDER':
             await fetch(`${API_BASE}/table-orders/${action.payload}`, { method: 'DELETE' });
             break;
+          case 'ADD_REVIEW':
+            await fetch(`${API_BASE}/reviews`, { method: 'POST', body: JSON.stringify(action.payload), headers });
+            break;
+          case 'ADD_TABLE_ORDER':
+            await fetch(`${API_BASE}/table-orders`, { method: 'POST', body: JSON.stringify(action.payload), headers });
+            break;
         }
       } catch (err) {
         console.error('API Post Error:', err);
@@ -587,7 +612,7 @@ export function AppProvider({ children }: { children: ReactNode }) {
     try {
       const [
         menuItemsReq, galleryReq, carouselReq, tablesReq, tableOrdersReq, 
-        ordersReq, reservationsReq, messagesReq, cateringReq
+        ordersReq, reservationsReq, messagesReq, cateringReq, reviewsReq
       ] = await Promise.all([
         fetch(`${API_BASE}/menu`).then(res => res.json()),
         fetch(`${API_BASE}/gallery`).then(res => res.json()),
@@ -598,6 +623,7 @@ export function AppProvider({ children }: { children: ReactNode }) {
         fetch(`${API_BASE}/reservations`).then(res => res.json()),
         fetch(`${API_BASE}/messages`).then(res => res.json()),
         fetch(`${API_BASE}/catering-requests`).then(res => res.json()),
+        fetch(`${API_BASE}/reviews`).then(res => res.json()).catch(() => []),
       ]);
 
       const savedCart = localStorage.getItem('rizqara_cart');
@@ -617,6 +643,7 @@ export function AppProvider({ children }: { children: ReactNode }) {
           cateringRequests: Array.isArray(cateringReq) ? cateringReq.reverse() : [],
           cart: savedCart ? JSON.parse(savedCart) : state.cart,
           isAdminLoggedIn: !!adminStatus,
+          reviews: Array.isArray(reviewsReq) ? reviewsReq : [],
         }
       });
     } catch (err) {
@@ -675,14 +702,17 @@ export function AppProvider({ children }: { children: ReactNode }) {
         status === 'Confirmed' ? 'Ordering' :
         status === 'Cooking' ? 'Cooking' :
         status === 'Ready' ? 'Ready' :
-        status === 'Served' ? 'Served' :
-        status === 'Paid' ? 'Paid' : 'Available';
-      dispatch({ type: 'SET_TABLE_STATUS', payload: { id: order.tableId, status: tableStatus, currentOrderId: id } });
+        status === 'Served' ? 'Served' : 'Available';
+      dispatch({ type: 'SET_TABLE_STATUS', payload: { id: order.tableId, status: tableStatus, currentOrderId: status === 'Paid' ? undefined : id } });
     }
   };
 
   const setTableStatus = (id: string, status: TableStatus, orderId?: string) => {
     dispatch({ type: 'SET_TABLE_STATUS', payload: { id, status, currentOrderId: orderId } });
+  };
+
+  const addReview = (review: Review) => {
+    dispatch({ type: 'ADD_REVIEW', payload: review });
   };
 
   const cartTotal = state.cart.reduce((sum, c) => sum + c.item.price * c.quantity, 0);
@@ -703,6 +733,7 @@ export function AppProvider({ children }: { children: ReactNode }) {
         placeTableOrder,
         updateTableOrderStatus,
         setTableStatus,
+        addReview,
       }}
     >
       {state.isLoading ? (

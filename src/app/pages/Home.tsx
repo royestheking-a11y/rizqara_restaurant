@@ -328,12 +328,12 @@ export function Home() {
               />
               {/* Floating Badge */}
               <div
-                className="absolute -bottom-6 -right-6 p-5 rounded-2xl shadow-xl text-center"
+                className="absolute bottom-4 right-4 sm:-bottom-6 sm:-right-6 p-4 sm:p-5 rounded-2xl shadow-xl text-center z-10"
                 style={{ background: 'linear-gradient(135deg, #6B0F0F, #4A0A0A)', color: 'white' }}
               >
-                <div style={{ fontFamily: 'var(--font-heading)', fontWeight: 800, fontSize: '24px', color: '#D4AF37' }}>EST.</div>
-                <div style={{ fontSize: '18px', fontWeight: 900, color: 'white' }}>2024</div>
-                <div style={{ fontSize: '10px', color: 'rgba(255,255,255,0.85)', marginTop: '2px' }}>Premiere Dining</div>
+                <div style={{ fontFamily: 'var(--font-heading)', fontWeight: 800, fontSize: 'clamp(18px, 4vw, 24px)', color: '#D4AF37', lineHeight: 1 }}>EST.</div>
+                <div style={{ fontSize: 'clamp(14px, 3.5vw, 18px)', fontWeight: 900, color: 'white', marginTop: '2px' }}>2024</div>
+                <div style={{ fontSize: 'clamp(8px, 2vw, 10px)', color: 'rgba(255,255,255,0.85)', marginTop: '2px', textTransform: 'uppercase', whiteSpace: 'nowrap' }}>Premiere Dining</div>
               </div>
               {/* Floating award */}
               <div
