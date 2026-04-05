@@ -7,6 +7,7 @@ import {
 } from 'lucide-react';
 import { menuItems, chefs, reviews } from '../data/restaurantData';
 import { useApp } from '../context/AppContext';
+import { SEO } from '../components/SEO';
 
 const heroSlides = [
   {
@@ -112,6 +113,61 @@ export function Home() {
 
   return (
     <div>
+      <SEO 
+        title="Best Restaurant in Barishal"
+        description="Rizqara Restaurant offers the most exquisite dining experience in Barishal. Explore our premium Asian fusion menu, book your table online, and enjoy authentic flavors."
+        keywords="Rizqara Restaurant, Best Restaurant Barishal, Fine Dining Bangladesh, Asian Fusion Barishal, Top Rated Restaurant Barishal"
+      />
+      <script type="application/ld+json">
+        {JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "Restaurant",
+          "name": "Rizqara Restaurant",
+          "image": "https://rizqara.tech/images/about-facade.png",
+          "url": "https://rizqara.tech",
+          "telephone": "+8801800000000",
+          "address": {
+            "@type": "PostalAddress",
+            "streetAddress": "M9W9+R6, Natun Bazar",
+            "addressLocality": "Barishal",
+            "addressRegion": "Barishal Division",
+            "postalCode": "8200",
+            "addressCountry": "BD"
+          },
+          "geo": {
+            "@type": "GeoCoordinates",
+            "latitude": 22.7010,
+            "longitude": 90.3637
+          },
+          "openingHoursSpecification": [
+            {
+              "@type": "OpeningHoursSpecification",
+              "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday"],
+              "opens": "11:00",
+              "closes": "23:00"
+            },
+            {
+              "@type": "OpeningHoursSpecification",
+              "dayOfWeek": ["Friday", "Saturday"],
+              "opens": "11:00",
+              "closes": "23:59"
+            },
+            {
+              "@type": "OpeningHoursSpecification",
+              "dayOfWeek": "Sunday",
+              "opens": "12:00",
+              "closes": "22:00"
+            }
+          ],
+          "servesCuisine": ["Asian", "Fusion", "Biryani", "BBQ"],
+          "priceRange": "$$",
+          "aggregateRating": {
+            "@type": "AggregateRating",
+            "ratingValue": "4.9",
+            "reviewCount": "1200"
+          }
+        })}
+      </script>
       {/* HERO SECTION */}
       <section className="relative h-screen min-h-[600px] overflow-hidden">
         {heroSlides.map((slide, i) => (

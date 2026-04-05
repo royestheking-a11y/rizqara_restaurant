@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Phone, Mail, MapPin, Clock, MessageCircle, Send, Check, Facebook, Instagram } from 'lucide-react';
 import { useApp } from '../context/AppContext';
+import { SEO } from '../components/SEO';
 
 export function Contact() {
   const [form, setForm] = useState({ name: '', phone: '', email: '', subject: '', message: '' });
@@ -39,6 +40,11 @@ export function Contact() {
 
   return (
     <div style={{ paddingTop: '80px', minHeight: '100vh' }}>
+      <SEO 
+        title="Contact Us - Visit Us in Barishal"
+        description="Find our location in Barishal, check our opening hours, or send us a message. We are here to assist with your reservations and catering needs."
+        keywords="Contact Rizqara, Restaurant Location Barishal, Opening Hours, Reservation Help, Customer Support"
+      />
       {/* Header */}
       <div className="py-20 px-4 text-center relative overflow-hidden" style={{ background: 'linear-gradient(135deg, #6B0F0F, #4A0A0A)' }}>
         <div className="absolute inset-0 opacity-15" style={{ backgroundImage: 'radial-gradient(circle at 60% 40%, #D4AF37 0%, transparent 60%)' }} />

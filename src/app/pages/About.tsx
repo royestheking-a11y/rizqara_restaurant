@@ -1,6 +1,7 @@
 import { Link } from 'react-router';
 import { Award, Users, Flame, Star, Check, ArrowRight } from 'lucide-react';
 import { chefs } from '../data/restaurantData';
+import { SEO } from '../components/SEO';
 
 export function About() {
   const milestones = [
@@ -19,6 +20,11 @@ export function About() {
 
   return (
     <div style={{ paddingTop: '80px', minHeight: '100vh' }}>
+      <SEO 
+        title="Our Story & Culinary Heritage"
+        description="Learn about the history of Rizqara Restaurant, our mission for culinary excellence in Barishal, and the expert team led by Chef Hurika."
+        keywords="About Rizqara, Restaurant History, Chef Hurika, Best Chefs Barishal, Premium Dining Mission"
+      />
       {/* Hero */}
       <div className="relative py-24 px-4 text-center overflow-hidden" style={{ background: 'linear-gradient(135deg, #6B0F0F, #4A0A0A)' }}>
         <div className="absolute inset-0 opacity-20" style={{ backgroundImage: 'radial-gradient(circle at 30% 70%, #D4AF37 0%, transparent 50%), radial-gradient(circle at 70% 30%, #D4AF37 0%, transparent 50%)' }} />

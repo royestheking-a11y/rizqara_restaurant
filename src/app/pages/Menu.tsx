@@ -2,6 +2,7 @@ import { useState, useMemo } from 'react';
 import { useNavigate, useSearchParams } from 'react-router';
 import { Search, Filter, Star, ShoppingCart, Eye, Flame, Leaf, ChevronDown, Clock, Users } from 'lucide-react';
 import { useApp } from '../context/AppContext';
+import { SEO } from '../components/SEO';
 
 const categories = ['All', 'Biryani', 'Kebab', 'Chinese', 'Thai', 'Indian', 'Drinks', 'Dessert'];
 const spiceLevels = ['All', 'Mild', 'Medium', 'Hot', 'Extra Hot'];
@@ -65,6 +66,11 @@ export function Menu() {
 
   return (
     <div style={{ paddingTop: '80px', minHeight: '100vh' }}>
+      <SEO 
+        title="Our Menu - Asian & Fusion Cuisine"
+        description="Explore the Rizqara Restaurant menu. From traditional Kacchi Biryani to premium BBQ platters and authentic Chinese dishes, discover the best flavors in Barishal."
+        keywords="Rizqara Menu, Biryani Barishal, BBQ Barishal, Chinese Food Barishal, Best Restaurant Menu"
+      />
       {/* Page Header */}
       <div
         className="py-16 px-4 text-center relative overflow-hidden"

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate, Link } from 'react-router';
 import { Star, Minus, Plus, ShoppingCart, ChevronRight, Flame, Clock, Users, Leaf, ArrowLeft, Heart, ThumbsUp, Send, MessageSquare, Lock, CheckCircle, ShoppingBag } from 'lucide-react';
 import { useApp } from '../context/AppContext';
+import { SEO } from '../components/SEO';
 
 interface ItemReview {
   id: string;
@@ -179,6 +180,12 @@ export function ProductDetail() {
 
   return (
     <div style={{ paddingTop: '80px', minHeight: '100vh' }}>
+      <SEO 
+        title={item.name}
+        description={item.description}
+        keywords={`${item.name}, ${item.category}, Rizqara Restaurant, Best ${item.name} in Barishal`}
+        image={item.image}
+      />
       {/* Breadcrumb */}
       <div className="px-4 sm:px-6 lg:px-8 py-4 max-w-7xl mx-auto">
         <div className="flex items-center gap-2 text-sm" style={{ color: '#6B7280' }}>
