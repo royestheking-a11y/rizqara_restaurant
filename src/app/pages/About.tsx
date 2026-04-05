@@ -55,12 +55,12 @@ export function About() {
                 style={{ height: '520px' }}
               />
               <div
-                className="absolute -bottom-8 right-8 p-6 rounded-2xl shadow-xl text-white text-center"
-                style={{ background: 'linear-gradient(135deg, #D4AF37, #B8960C)', color: '#111' }}
+                className="absolute bottom-4 right-4 sm:-bottom-8 sm:right-8 p-4 sm:p-6 rounded-2xl shadow-xl text-white text-center transform sm:scale-110"
+                style={{ background: 'linear-gradient(135deg, #D4AF37, #B8960C)', color: '#111', zIndex: 10 }}
               >
-                <div style={{ fontFamily: 'var(--font-heading)', fontWeight: 900, fontSize: '32px', lineHeight: 1 }}>EST.</div>
-                <div style={{ fontSize: '24px', fontWeight: 900, marginTop: '2px' }}>2024</div>
-                <div style={{ fontSize: '11px', fontWeight: 700, marginTop: '4px', textTransform: 'uppercase' }}>Premiere Dining</div>
+                <div style={{ fontFamily: 'var(--font-heading)', fontWeight: 900, fontSize: 'clamp(20px, 4vw, 32px)', lineHeight: 1 }}>EST.</div>
+                <div style={{ fontSize: 'clamp(18px, 3.5vw, 24px)', fontWeight: 900, marginTop: '2px' }}>2024</div>
+                <div style={{ fontSize: 'clamp(9px, 2vw, 11px)', fontWeight: 700, marginTop: '4px', textTransform: 'uppercase', whiteSpace: 'nowrap' }}>Premiere Dining</div>
               </div>
             </div>
 
