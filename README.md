@@ -81,7 +81,7 @@ Access the Admin Panel at `/admin` using the following credentials:
 ## 🎨 Branding & Identity
 - **Established**: 2024
 - **Chef**: Chef Hurika (Senior Chef — Asian Cuisine)
-- **Company**: [Rizqara Tech](https://www.rizqara.tech) — Premium Dining in Barishal.
+- **Company**: [Rizqara Tech](https://www.rizqara.tech) — Premium Dining in Dhaka.
 
 ---
 

@@ -26,7 +26,7 @@ const menuItems = [
   {
     name: 'Kacchi Biryani', slug: 'kacchi-biryani', category: 'Biryani', price: 350,
     image: 'https://images.unsplash.com/photo-1599043513900-ed6fe01d3833?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxiaXJ5YW5pJTIwcmljZSUyMHNhZmZyb24lMjBzcGljZWR8ZW58MXx8fHwxNzc1MDU4NDMzfDA&ixlib=rb-4.1.0&q=80&w=1080',
-    description: 'A royal delicacy made with tender mutton and fragrant basmati rice, slow-cooked with exotic spices and saffron. A true Barishal tradition prepared the authentic way.',
+    description: 'A royal delicacy made with tender mutton and fragrant basmati rice, slow-cooked with exotic spices and saffron. A true Dhaka tradition prepared the authentic way.',
     ingredients: ['Basmati Rice', 'Mutton', 'Saffron', 'Ghee', 'Onions', 'Yogurt', 'Cardamom', 'Cinnamon', 'Bay Leaves', 'Potatoes'],
     nutrition: { calories: 680, protein: '38g', carbs: '72g', fat: '22g' },
     spiceLevel: 'Medium', rating: 4.9, reviewCount: 342,
@@ -140,10 +140,10 @@ const chefs = [
 ];
 
 const reviews = [
-  { name: 'Md. Farhan Islam', rating: 5, comment: 'Absolutely the best restaurant in Barishal! The Kacchi Biryani was heavenly — rich, aromatic, and perfectly cooked. The ambiance is top-notch and service is impeccable. I bring every guest here.', date: '2026-03-20', location: 'Barishal, Bangladesh' },
-  { name: 'Sultana Razia', rating: 5, comment: 'Rizqara never disappoints! We celebrated our anniversary here and the staff went above and beyond. The BBQ Platter was phenomenal. This place is truly world-class for Barishal.', date: '2026-03-15', location: 'Dhaka, Bangladesh' },
+  { name: 'Md. Farhan Islam', rating: 5, comment: 'Absolutely the best restaurant in Dhaka! The Kacchi Biryani was heavenly — rich, aromatic, and perfectly cooked. The ambiance is top-notch and service is impeccable. I bring every guest here.', date: '2026-03-20', location: 'Dhaka, Bangladesh' },
+  { name: 'Sultana Razia', rating: 5, comment: 'Rizqara never disappoints! We celebrated our anniversary here and the staff went above and beyond. The BBQ Platter was phenomenal. This place is truly world-class for Dhaka.', date: '2026-03-15', location: 'Dhaka, Bangladesh' },
   { name: 'Karim Uddin', rating: 5, comment: "I've dined in restaurants across Bangladesh, but Rizqara stands out. The Special Set Menu is exceptional value. Chef Rahman's cooking is on a completely different level!", date: '2026-03-10', location: 'Khulna, Bangladesh' },
-  { name: 'Nasrin Akter', rating: 4, comment: 'Beautiful restaurant, stunning decor and amazing food. The Thai Soup was authentic and packed with flavor. The staff is very professional and attentive. Will visit again soon!', date: '2026-02-28', location: 'Barishal, Bangladesh' },
+  { name: 'Nasrin Akter', rating: 4, comment: 'Beautiful restaurant, stunning decor and amazing food. The Thai Soup was authentic and packed with flavor. The staff is very professional and attentive. Will visit again soon!', date: '2026-02-28', location: 'Dhaka, Bangladesh' },
   { name: 'Tanvir Ahmed', rating: 5, comment: "Rizqara has completely changed my dining expectations. The beef kebabs are the best I've ever had — tender, flavorful, and perfectly spiced. A truly supreme restaurant!", date: '2026-02-20', location: 'Chittagong, Bangladesh' }
 ];
 
@@ -165,7 +165,7 @@ const cateringPackages = [
 ];
 
 const carouselSlides = [
-  { url: 'https://images.unsplash.com/photo-1768697358705-c1b60333da35?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxsdXh1cnklMjByZXN0YXVyYW50JTIwaW50ZXJpb3IlMjBlbGVnYW50JTIwZGluaW5nfGVufDF8fHx8MTc3NTA1MzEzNHww&ixlib=rb-4.1.0&q=80&w=1080', title: 'RIZQARA RESTAURANT', subtitle: 'Premium Dining Experience', description: 'The finest dining destination in Barishal — where extraordinary flavors meet unmatched elegance.', badge: '★ Best Restaurant in Barishal' },
+  { url: 'https://images.unsplash.com/photo-1768697358705-c1b60333da35?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxsdXh1cnklMjByZXN0YXVyYW50JTIwaW50ZXJpb3IlMjBlbGVnYW50JTIwZGluaW5nfGVufDF8fHx8MTc3NTA1MzEzNHww&ixlib=rb-4.1.0&q=80&w=1080', title: 'RIZQARA RESTAURANT', subtitle: 'Premium Dining Experience', description: 'The finest dining destination in Dhaka — where extraordinary flavors meet unmatched elegance.', badge: '★ Best Restaurant in Dhaka' },
   { url: 'https://images.unsplash.com/photo-1414235077428-338989a2e8c0?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&w=1080&q=80', title: 'Authentic Taste', subtitle: "Nature's Best Ingredients", description: 'We source only the freshest, highest-quality ingredients to craft dishes that tell a story of passion.', badge: '✦ 100% Fresh & Natural' },
   { url: 'https://images.unsplash.com/photo-1552566626-52f8b828329f?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&w=1080&q=80', title: 'Perfect Place for Family', subtitle: 'For Every Occasion', description: 'Create unforgettable memories with the people you love, surrounded by warm hospitality.', badge: '❤ Family Friendly' }
 ];
