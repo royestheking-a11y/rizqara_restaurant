@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Phone, Mail, MapPin, Clock, MessageCircle, Send, Check, Facebook, Instagram } from 'lucide-react';
+import { Phone, Mail, MapPin, MessageCircle, Send, Check, Facebook, Instagram } from 'lucide-react';
 import { useApp } from '../context/AppContext';
 import { SEO } from '../components/SEO';
 
