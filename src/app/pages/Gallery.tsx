@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { X, ZoomIn, ChevronLeft, ChevronRight } from 'lucide-react';
 import { useApp } from '../context/AppContext';
 import { SEO } from '../components/SEO';
+import { GallerySkeleton } from '../components/GallerySkeleton';
 
 const categories = ['All', 'Restaurant', 'Food', 'Events', 'Kitchen'];
 
@@ -18,6 +19,10 @@ export function Gallery() {
   const closeLightbox = () => setLightboxIndex(null);
   const prevImage = () => setLightboxIndex(i => i === null ? null : (i - 1 + filtered.length) % filtered.length);
   const nextImage = () => setLightboxIndex(i => i === null ? null : (i + 1) % filtered.length);
+  
+  if (state.isLoading) {
+    return <GallerySkeleton />;
+  }
 
   return (
     <div style={{ paddingTop: '80px', minHeight: '100vh' }}>

@@ -3,6 +3,7 @@ import { useParams, useNavigate, Link } from 'react-router';
 import { Star, Minus, Plus, ShoppingCart, ChevronRight, Flame, Clock, Users, Leaf, ArrowLeft, Heart, ThumbsUp, Send, MessageSquare, Lock, CheckCircle, ShoppingBag } from 'lucide-react';
 import { useApp } from '../context/AppContext';
 import { SEO } from '../components/SEO';
+import { ProductDetailSkeleton } from '../components/ProductDetailSkeleton';
 
 interface ItemReview {
   id: string;
@@ -143,6 +144,10 @@ export function ProductDetail() {
     const updated = reviews.map(r => r.id === reviewId ? { ...r, helpful: r.helpful + 1 } : r);
     saveReviews(updated);
   };
+  
+  if (state.isLoading) {
+    return <ProductDetailSkeleton />;
+  }
 
   if (!item) {
     return (

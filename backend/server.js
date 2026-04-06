@@ -31,15 +31,21 @@ app.get('/', (req, res) => {
 app.listen(PORT, () => {
   console.log(`Server listening on port ${PORT}`);
   
-  // Internal Self-Ping to prevent sleep (if supported by environment)
-  // Usually platforms like Render/Fly.io require external pings, but 
-  // some environments stay awake if there's internal activity.
-  const rootUrl = `http://localhost:${PORT}`;
+  // Improved Self-Ping to prevent sleep on platforms like Render
+  // Render's free tier sleeps after 15 minutes of inactivity. 
+  // Pinging the external URL every 14 minutes keeps it awake.
+  const rootUrl = process.env.RENDER_EXTERNAL_URL || process.env.APP_URL || `http://localhost:${PORT}`;
+  const httpModule = rootUrl.startsWith('https') ? require('https') : require('http');
+  
   setInterval(() => {
-    require('http').get(rootUrl, (res) => {
-      // Silent success
+    httpModule.get(rootUrl, (res) => {
+      if (res.statusCode === 200) {
+        console.log(`Self-ping successful: ${rootUrl}`);
+      } else {
+        console.log(`Self-ping returned status: ${res.statusCode}`);
+      }
     }).on('error', (err) => {
-      // Silent error
+      console.error(`Self-ping failed: ${err.message}`);
     });
-  }, 10 * 60 * 1000); // 10 minutes
+  }, 14 * 60 * 1000); // 14 minutes
 });
