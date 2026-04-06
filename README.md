@@ -70,14 +70,6 @@ A specialized system for dine-in customers:
 
 ---
 
-## 🔐 Administrative Access
-
-Access the Admin Panel at `/admin` using the following credentials:
-- **Username**: `admin@rizqara.com`
-- **Password**: `rizqara878`
-
----
-
 ## 🎨 Branding & Identity
 - **Established**: 2024
 - **Chef**: Chef Hurika (Senior Chef — Asian Cuisine)

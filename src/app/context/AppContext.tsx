@@ -1,5 +1,6 @@
 /// <reference types="vite/client" />
-import React, { createContext, useContext, useReducer, useEffect, ReactNode } from 'react';
+import { createContext, useContext, useReducer, useEffect, ReactNode } from 'react';
+import { reviews as staticReviews } from '../data/restaurantData';
 
 // ─── Existing Types ────────────────────────────────────────────────────────────
 export interface MenuItem {
@@ -228,7 +229,7 @@ const initialState: AppState = {
   carouselSlides: [],
   tables: [],
   tableOrders: [],
-  reviews: [],
+  reviews: [...staticReviews],
   isAdminLoggedIn: false,
   cartOpen: false,
   notification: null,
@@ -492,12 +493,22 @@ export function AppProvider({ children }: { children: ReactNode }) {
   const [state, defaultDispatch] = useReducer(reducer, initialState);
 
   // ─── Self-Ping System (Keep-Alive) ───
+  // We ping every 5 minutes to ensure Render/Fly.io doesn't sleep.
   useEffect(() => {
-    const pingInterval = setInterval(() => {
-      fetch(`${API_BASE.replace('/api', '')}/`)
-        .then(() => console.log('Backend Ping: Kept Alive'))
-        .catch(() => console.log('Backend Ping: Failed (Silent)'));
-    }, 10 * 60 * 1000); // 10 minutes
+    const pingBackend = async () => {
+      try {
+        const rootUrl = API_BASE.replace('/api', '');
+        await fetch(`${rootUrl}/`, { mode: 'no-cors' });
+        console.log('Backend Ping: Kept Alive', new Date().toLocaleTimeString());
+      } catch (err) {
+        console.log('Backend Ping: Silent failure (Expected if waking up)', err);
+      }
+    };
+
+    // Initial ping
+    pingBackend();
+
+    const pingInterval = setInterval(pingBackend, 5 * 60 * 1000); // 5 minutes
 
     return () => clearInterval(pingInterval);
   }, []);
@@ -594,9 +605,12 @@ export function AppProvider({ children }: { children: ReactNode }) {
           case 'DELETE_TABLE_ORDER':
             await fetch(`${API_BASE}/table-orders/${action.payload}`, { method: 'DELETE' });
             break;
-          case 'ADD_REVIEW':
+          case 'ADD_REVIEW': {
             await fetch(`${API_BASE}/reviews`, { method: 'POST', body: JSON.stringify(action.payload), headers });
+            const currentLocal = JSON.parse(localStorage.getItem('rizqara_reviews') || '[]');
+            localStorage.setItem('rizqara_reviews', JSON.stringify([action.payload, ...currentLocal]));
             break;
+          }
           case 'ADD_TABLE_ORDER':
             await fetch(`${API_BASE}/table-orders`, { method: 'POST', body: JSON.stringify(action.payload), headers });
             break;
@@ -643,7 +657,18 @@ export function AppProvider({ children }: { children: ReactNode }) {
           cateringRequests: Array.isArray(cateringReq) ? cateringReq.reverse() : [],
           cart: savedCart ? JSON.parse(savedCart) : state.cart,
           isAdminLoggedIn: !!adminStatus,
-          reviews: Array.isArray(reviewsReq) ? reviewsReq : [],
+          reviews: (() => {
+            const serverReviews = Array.isArray(reviewsReq) ? reviewsReq : [];
+            const localReviews = JSON.parse(localStorage.getItem('rizqara_reviews') || '[]');
+            const all = [...serverReviews, ...localReviews, ...staticReviews];
+            // Deduplicate by ID
+            const seen = new Set();
+            return all.filter(r => {
+              if (seen.has(r.id)) return false;
+              seen.add(r.id);
+              return true;
+            });
+          })(),
         }
       });
     } catch (err) {
@@ -736,11 +761,7 @@ export function AppProvider({ children }: { children: ReactNode }) {
         addReview,
       }}
     >
-      {state.isLoading ? (
-        <div className="min-h-screen flex items-center justify-center bg-[#0a0a0a]">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary-500"></div>
-        </div>
-      ) : children}
+      {children}
     </AppContext.Provider>
   );
 }

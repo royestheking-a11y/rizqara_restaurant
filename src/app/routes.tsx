@@ -1,4 +1,4 @@
-import { lazy, Suspense } from 'react';
+import { lazy } from 'react';
 import { createBrowserRouter, Outlet } from 'react-router';
 import { AppProvider } from './context/AppContext';
 import { Layout } from './components/Layout';
@@ -19,22 +19,13 @@ const TableOrder = lazy(() => import('./pages/TableOrder').then(m => ({ default:
 const KitchenDisplay = lazy(() => import('./pages/KitchenDisplay').then(m => ({ default: m.KitchenDisplay })));
 const NotFound = lazy(() => import('./pages/NotFound').then(m => ({ default: m.NotFound })));
 
-// Premium loading fallback
-const PageLoader = () => (
-  <div className="min-h-[60vh] flex items-center justify-center bg-[#0a0a0a]">
-    <div className="relative w-16 h-16">
-      <div className="absolute inset-0 border-4 border-primary-500/10 rounded-full"></div>
-      <div className="absolute inset-0 border-4 border-primary-500 border-t-transparent rounded-full animate-spin"></div>
-    </div>
-  </div>
-);
+
+
 
 function Root() {
   return (
     <AppProvider>
-      <Suspense fallback={<PageLoader />}>
-        <Outlet />
-      </Suspense>
+      <Outlet />
     </AppProvider>
   );
 }

@@ -5,9 +5,10 @@ import {
   Leaf, Award, Clock, Shield, Smile, Flame, Users,
   Calendar, ShoppingCart, Eye, MapPin, Phone, ChevronDown, Quote,
 } from 'lucide-react';
-import { menuItems, chefs, reviews } from '../data/restaurantData';
+import { menuItems, chefs } from '../data/restaurantData';
 import { useApp } from '../context/AppContext';
 import { SEO } from '../components/SEO';
+import { HomeSkeleton } from '../components/HomeSkeleton';
 
 const heroSlides = [
   {
@@ -74,7 +75,8 @@ export function Home() {
   const [reviewTransitioning, setReviewTransitioning] = useState(false);
   const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
   const reviewIntervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
-  const { addToCart } = useApp();
+  const { state, addToCart } = useApp();
+  const reviews = state.reviews;
   const navigate = useNavigate();
 
   const popularItems = menuItems.filter(item => item.isPopular).slice(0, 8);
@@ -90,7 +92,7 @@ export function Home() {
   const prevSlide = () => goToSlide((currentSlide - 1 + heroSlides.length) % heroSlides.length);
 
   const goToReview = (index: number) => {
-    if (reviewTransitioning) return;
+    if (reviewTransitioning || reviews.length <= 1) return;
     setReviewTransitioning(true);
     setTimeout(() => {
       setCurrentReview(index);
@@ -110,6 +112,10 @@ export function Home() {
     reviewIntervalRef.current = setInterval(nextReview, 4500);
     return () => { if (reviewIntervalRef.current) clearInterval(reviewIntervalRef.current); };
   }, [currentReview]);
+
+  if (state.isLoading) {
+    return <HomeSkeleton />;
+  }
 
   return (
     <div>
@@ -184,7 +190,8 @@ export function Home() {
               alt={slide.title} 
               className="w-full h-full object-cover" 
               loading="eager"
-              fetchPriority={currentSlide === i ? "high" : "auto"}
+              // @ts-ignore - Lowercase fetchpriority is required by React at runtime to avoid warnings, despite TS preferring camelCase
+              fetchpriority={currentSlide === i ? "high" : "auto"}
             />
             <div className="absolute inset-0" style={{ background: 'linear-gradient(to bottom, rgba(0,0,0,0.25) 0%, rgba(0,0,0,0.55) 60%, rgba(0,0,0,0.7) 100%)' }} />
           </div>

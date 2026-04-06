@@ -2,8 +2,13 @@ import { Link } from 'react-router';
 import { Award, Users, Flame, Star, Check, ArrowRight } from 'lucide-react';
 import { chefs } from '../data/restaurantData';
 import { SEO } from '../components/SEO';
+import { useApp } from '../context/AppContext';
+import { AboutSkeleton } from '../components/AboutSkeleton';
 
 export function About() {
+  const { state } = useApp();
+
+
   const milestones = [
     { year: '2024', title: 'Grand Opening', desc: 'Rizqara Restaurant opened its doors in Dhaka with a vision for premium dining.' },
     { year: '2024', title: 'First Award', desc: 'Won "Best New Restaurant in Dhaka" at the Regional Food Excellence Awards.' },
@@ -17,6 +22,10 @@ export function About() {
     { icon: Users, title: 'Guest Experience', desc: 'Your satisfaction and comfort are at the heart of everything we do.' },
     { icon: Award, title: 'Continuous Innovation', desc: 'We constantly evolve our menu to bring you exciting new culinary experiences.' },
   ];
+
+  if (state.isLoading) {
+    return <AboutSkeleton />;
+  }
 
   return (
     <div style={{ paddingTop: '80px', minHeight: '100vh' }}>

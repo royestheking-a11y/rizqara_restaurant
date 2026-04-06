@@ -30,4 +30,16 @@ app.get('/', (req, res) => {
 
 app.listen(PORT, () => {
   console.log(`Server listening on port ${PORT}`);
+  
+  // Internal Self-Ping to prevent sleep (if supported by environment)
+  // Usually platforms like Render/Fly.io require external pings, but 
+  // some environments stay awake if there's internal activity.
+  const rootUrl = `http://localhost:${PORT}`;
+  setInterval(() => {
+    require('http').get(rootUrl, (res) => {
+      // Silent success
+    }).on('error', (err) => {
+      // Silent error
+    });
+  }, 10 * 60 * 1000); // 10 minutes
 });

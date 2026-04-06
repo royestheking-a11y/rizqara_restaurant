@@ -3,6 +3,7 @@ import { useNavigate, useSearchParams } from 'react-router';
 import { Search, Filter, Star, ShoppingCart, Eye, Flame, Leaf, ChevronDown, Clock, Users } from 'lucide-react';
 import { useApp } from '../context/AppContext';
 import { SEO } from '../components/SEO';
+import { MenuSkeleton } from '../components/MenuSkeleton';
 
 const categories = ['All', 'Biryani', 'Kebab', 'Chinese', 'Thai', 'Indian', 'Drinks', 'Dessert'];
 const spiceLevels = ['All', 'Mild', 'Medium', 'Hot', 'Extra Hot'];
@@ -18,7 +19,10 @@ function StarRating({ rating, size = 14 }: { rating: number; size?: number }) {
 }
 
 export function Menu() {
+  const { state, addToCart } = useApp();
+  const navigate = useNavigate();
   const [searchParams, setSearchParams] = useSearchParams();
+
   const initialCat = searchParams.get('category') || 'All';
   const [activeCategory, setActiveCategory] = useState(initialCat);
   const [search, setSearch] = useState('');
@@ -28,8 +32,6 @@ export function Menu() {
   const [sortBy, setSortBy] = useState('popular');
   const [maxPrice, setMaxPrice] = useState(1000);
   const [showFilters, setShowFilters] = useState(false);
-  const { state, addToCart } = useApp();
-  const navigate = useNavigate();
 
   const filtered = useMemo(() => {
     let items = [...state.menuItems];
@@ -50,6 +52,10 @@ export function Menu() {
 
     return items;
   }, [state.menuItems, activeCategory, search, spiceFilter, vegOnly, spicyOnly, maxPrice, sortBy]);
+
+  if (state.isLoading) {
+    return <MenuSkeleton />;
+  }
 
   const handleCategoryChange = (cat: string) => {
     setActiveCategory(cat);

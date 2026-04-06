@@ -1,7 +1,9 @@
+import { Suspense } from 'react';
 import { Outlet, ScrollRestoration } from 'react-router';
 import { Navbar } from './Navbar';
 import { Footer } from './Footer';
 import { CartPage } from './CartPage';
+import { PageSkeleton } from './PageSkeleton';
 
 export function Layout() {
   return (
@@ -9,7 +11,9 @@ export function Layout() {
       <ScrollRestoration />
       <Navbar />
       <main className="flex-1">
-        <Outlet />
+        <Suspense fallback={<PageSkeleton />}>
+          <Outlet />
+        </Suspense>
       </main>
       <Footer />
       <CartPage />
