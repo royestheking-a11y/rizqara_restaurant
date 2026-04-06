@@ -261,7 +261,7 @@ function InvoiceModal({ orderId, onClose }: { orderId: string; onClose: () => vo
 
           <div className="grid grid-cols-2 gap-3 mb-4 text-xs">
             {[
-              { label: 'Invoice ID', value: order.id.split('-')[1] || order.id.slice(-6) },
+              { label: 'Invoice ID', value: (order.id || '').split('-')[1] || (order.id || '').slice(-6) },
               { label: 'Table', value: `Table ${order.tableNumber}` },
               { label: 'Date', value: date.toLocaleDateString() },
               { label: 'Time', value: date.toLocaleTimeString() },
@@ -401,7 +401,7 @@ function TableDetailPanel({
   const tableOrders = state.tableOrders ?? [];
 
   const selectedOrder = table.currentOrderId
-    ? tableOrders.find(o => o.id === table.currentOrderId)
+    ? tableOrders.find(o => o.id === table.currentOrderId && o.status !== 'Paid')
     : null;
 
   const [showQR, setShowQR] = useState(false);
@@ -510,7 +510,7 @@ function TableDetailPanel({
                 <div className="flex items-center justify-between">
                   <div>
                     <p style={{ fontFamily: 'var(--font-heading)', fontWeight: 700, fontSize: '13px', color: '#111' }}>
-                      Order #{selectedOrder.id.slice(-6).toUpperCase()}
+                      Order #{(selectedOrder.id || '').slice(-6).toUpperCase()}
                     </p>
                     <p style={{ fontSize: '11px', color: '#9CA3AF' }}>
                       {new Date(selectedOrder.createdAt).toLocaleTimeString()} · <ElapsedTime since={selectedOrder.createdAt} />
@@ -568,7 +568,7 @@ function TableDetailPanel({
                   const isConfirm = selectedOrder.status === 'Pending';
                   return (
                     <button
-                      onClick={() => updateTableOrderStatus(selectedOrder.id, nextStatus)}
+                      onClick={() => updateTableOrderStatus(selectedOrder.id!, nextStatus)}
                       className="w-full py-2.5 rounded-xl text-sm font-semibold text-white transition-all hover:shadow-md hover:-translate-y-0.5 active:scale-95 flex items-center justify-center gap-2"
                       style={{
                         background: isConfirm
@@ -583,7 +583,7 @@ function TableDetailPanel({
                   );
                 })()}
                 <button
-                  onClick={() => setShowInvoice(selectedOrder.id)}
+                  onClick={() => setShowInvoice(selectedOrder.id || null)}
                   className="w-full py-2 rounded-xl text-sm font-semibold transition-all hover:shadow-md flex items-center justify-center gap-2"
                   style={{ backgroundColor: '#F3F4F6', color: '#374151', fontFamily: 'var(--font-heading)' }}
                 >
@@ -619,13 +619,13 @@ function TableDetailPanel({
                         <FileText size={12} style={{ color: '#9CA3AF' }} />
                       </div>
                       <div className="min-w-0">
-                        <p style={{ fontFamily: 'var(--font-heading)', fontWeight: 700, fontSize: '12px', color: '#111' }}>#{o.id.slice(-6).toUpperCase()}</p>
+                        <p style={{ fontFamily: 'var(--font-heading)', fontWeight: 700, fontSize: '12px', color: '#111' }}>#{(o.id || '').slice(-6).toUpperCase()}</p>
                         <p style={{ fontSize: '10px', color: '#9CA3AF' }}>{new Date(o.createdAt).toLocaleString()}</p>
                       </div>
                     </div>
                     <div className="flex items-center gap-2 flex-shrink-0">
                       <span style={{ fontFamily: 'var(--font-heading)', fontWeight: 700, fontSize: '13px', color: '#6B0F0F' }}>৳{o.total}</span>
-                      <button onClick={() => setShowInvoice(o.id)} className="w-7 h-7 rounded-lg flex items-center justify-center hover:bg-gray-100 transition-colors">
+                      <button onClick={() => setShowInvoice(o.id || null)} className="w-7 h-7 rounded-lg flex items-center justify-center hover:bg-gray-100 transition-colors">
                         <Receipt size={12} style={{ color: '#9CA3AF' }} />
                       </button>
                     </div>

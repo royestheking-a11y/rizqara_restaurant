@@ -594,7 +594,15 @@ export function AppProvider({ children }: { children: ReactNode }) {
             await fetch(`${API_BASE}/tables/${action.payload}`, { method: 'DELETE' });
             break;
           case 'SET_TABLE_STATUS':
-            await fetch(`${API_BASE}/tables/${action.payload.id}`, { method: 'PUT', body: JSON.stringify({ status: action.payload.status, currentOrderId: action.payload.currentOrderId, occupiedSince: action.payload.occupiedSince }), headers });
+            await fetch(`${API_BASE}/tables/${action.payload.id}`, { 
+              method: 'PUT', 
+              body: JSON.stringify({ 
+                status: action.payload.status, 
+                currentOrderId: action.payload.currentOrderId ?? null, 
+                occupiedSince: action.payload.occupiedSince ?? null 
+              }), 
+              headers 
+            });
             break;
           case 'PLACE_TABLE_ORDER':
             await fetch(`${API_BASE}/table-orders`, { method: 'POST', body: JSON.stringify(action.payload), headers });
